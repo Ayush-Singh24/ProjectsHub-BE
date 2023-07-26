@@ -8,6 +8,7 @@ config();
 
 import cors from "cors";
 import { authRouter } from "routers/authRouter";
+import { errorHandeler } from "utils/errorHandler";
 
 export const prisma = new PrismaClient();
 
@@ -40,6 +41,7 @@ app.use(
 );
 
 app.use("/auth", authRouter);
+app.use(errorHandeler);
 
 app.listen(PORT, () => {
   console.log(`Listening on ${PORT}⚡`);

@@ -2,14 +2,13 @@ import { prisma } from "index";
 import { GeneralError } from "utils/generalError";
 import bcrypt from "bcrypt";
 import { SALT_ROUNDS } from "../utils/constants";
+import { userDetails } from "../utils/types";
 
-interface userDetails {
-  username: string;
-  email?: string;
-  password: string;
-}
-
-export const creatUser = async ({ username, email, password }: userDetails) => {
+export const createUser = async ({
+  username,
+  email,
+  password,
+}: userDetails) => {
   let user = await prisma.user.findFirst({
     where: {
       OR: [
