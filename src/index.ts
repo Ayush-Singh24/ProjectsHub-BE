@@ -17,7 +17,7 @@ const app: Express = express();
 
 declare module "express-session" {
   interface SessionData {
-    user: string;
+    isAuth: boolean;
   }
 }
 
