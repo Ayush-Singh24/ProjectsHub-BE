@@ -39,7 +39,6 @@ app.use(
 );
 
 app.get("/", (req: Request, res: Response) => {
-  req.session.user = "hello";
   console.log(req.session);
   res.status(200).send("hello world");
 });
