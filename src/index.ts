@@ -7,6 +7,7 @@ import { config } from "dotenv";
 config();
 
 import cors from "cors";
+import { authRouter } from "routers/authRouter";
 
 export const prisma = new PrismaClient();
 
@@ -38,10 +39,7 @@ app.use(
   })
 );
 
-app.get("/", (req: Request, res: Response) => {
-  console.log(req.session);
-  res.status(200).send("hello world");
-});
+app.use("/auth", authRouter);
 
 app.listen(PORT, () => {
   console.log(`Listening on ${PORT}⚡`);
