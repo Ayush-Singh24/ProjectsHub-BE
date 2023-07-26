@@ -5,7 +5,7 @@ import { SALT_ROUNDS } from "../utils/constants";
 
 interface userDetails {
   username: string;
-  email: string;
+  email?: string;
   password: string;
 }
 
@@ -36,6 +36,26 @@ export const creatUser = async ({ username, email, password }: userDetails) => {
       password: hasedPassword,
     },
   });
+
+  return user.username;
+};
+
+export const loginUser = async ({ username, password }: userDetails) => {
+  const user = await prisma.user.findUnique({
+    where: {
+      username,
+    },
+  });
+
+  if (!user) {
+    throw new GeneralError(404, "Username does not exist");
+  }
+
+  const isPasswordCorrect = await bcrypt.compare(password, user.password);
+
+  if (!isPasswordCorrect) {
+    throw new GeneralError(401, "Incorrect password");
+  }
 
   return user.username;
 };
