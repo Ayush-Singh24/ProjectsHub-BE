@@ -1,4 +1,4 @@
-import express, { Express, json } from "express";
+import express, { Express, Request, Response, json } from "express";
 import session from "express-session";
 import { PrismaSessionStore } from "@quixo3/prisma-session-store";
 import { PrismaClient } from "@prisma/client";
@@ -44,6 +44,13 @@ app.use(json());
 
 app.use("/auth", authRouter);
 app.use(errorHandler);
+
+app.get("/", async (req: Request, res: Response) => {
+  if (req.session.isAuth) {
+    return res.status(200).send({ message: "authorised" });
+  }
+  return res.status(401).send({ message: "not authorised" });
+});
 
 app.listen(PORT, () => {
   console.log(`Listening on ${PORT}⚡`);

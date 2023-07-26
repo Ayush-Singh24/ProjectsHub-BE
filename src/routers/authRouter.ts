@@ -30,3 +30,16 @@ authRouter.post(
     }
   }
 );
+
+authRouter.post(
+  "/logout",
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      req.session.destroy(() => {
+        res.status(200).send({ message: "Logged out" });
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+);
