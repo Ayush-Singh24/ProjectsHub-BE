@@ -1,7 +1,6 @@
 import express, { Router, Request, Response, NextFunction } from "express";
-import { createUser } from "services/authService";
-import { userDetails } from "utils/types";
-import { signUpSchema } from "utils/zodSchemas";
+import { createUser, loginUser } from "../services/authService";
+import { loginSchema, signUpSchema } from "../utils/zodSchemas";
 
 export const authRouter: Router = express.Router();
 
@@ -12,6 +11,19 @@ authRouter.post(
       const { username, email, password } = signUpSchema.parse(req.body);
       await createUser({ username, email, password });
       res.status(201).send({ message: "Successfully signed up" });
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+authRouter.post(
+  "/login",
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { username, password } = loginSchema.parse(req.body);
+      await loginUser({ username, password });
+      res.status(200).send({ message: "Logged in" });
     } catch (error) {
       next(error);
     }

@@ -2,7 +2,7 @@ import { ZodError } from "zod";
 import { GeneralError } from "./generalError";
 import { Request, Response, NextFunction } from "express";
 
-export const errorHandeler = (
+export const errorHandler = (
   err: GeneralError | ZodError,
   req: Request,
   res: Response,

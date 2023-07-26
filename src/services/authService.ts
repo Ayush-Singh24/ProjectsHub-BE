@@ -1,8 +1,8 @@
-import { prisma } from "index";
-import { GeneralError } from "utils/generalError";
+import { prisma } from "../index";
 import bcrypt from "bcrypt";
 import { SALT_ROUNDS } from "../utils/constants";
 import { userDetails } from "../utils/types";
+import { GeneralError } from "../utils/generalError";
 
 export const createUser = async ({
   username,
@@ -39,7 +39,13 @@ export const createUser = async ({
   return user.username;
 };
 
-export const loginUser = async ({ username, password }: userDetails) => {
+export const loginUser = async ({
+  username,
+  password,
+}: {
+  username: string;
+  password: string;
+}) => {
   const user = await prisma.user.findUnique({
     where: {
       username,

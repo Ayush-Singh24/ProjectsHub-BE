@@ -1,10 +1,12 @@
 {
   "name": "projectshub-be",
   "version": "1.0.0",
-  "main": "dist/index.js",
+  "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "nodemon"
+    "dev": "nodemon src/index.ts",
+    "tsc": "tsc",
+    "build": "tsc --project ."
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
