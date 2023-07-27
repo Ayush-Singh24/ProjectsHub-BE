@@ -17,7 +17,7 @@ const app: Express = express();
 
 declare module "express-session" {
   interface SessionData {
-    isAuth: boolean;
+    username: string;
   }
 }
 
@@ -46,8 +46,8 @@ app.use("/auth", authRouter);
 app.use(errorHandler);
 
 app.get("/", async (req: Request, res: Response) => {
-  if (req.session.isAuth) {
-    return res.status(200).send({ message: "authorised" });
+  if (req.session.username) {
+    return res.status(200).send({ username: req.session.username });
   }
   return res.status(401).send({ message: "not authorised" });
 });

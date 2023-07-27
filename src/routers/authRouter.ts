@@ -21,9 +21,9 @@ authRouter.post(
   "/login",
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      req.session.isAuth = true;
       const { username, password } = loginSchema.parse(req.body);
       await loginUser({ username, password });
+      req.session.username = username;
       res.status(200).send({ message: "Logged in" });
     } catch (error) {
       next(error);
