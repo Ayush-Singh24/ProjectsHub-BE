@@ -6,7 +6,7 @@ import { PrismaClient } from "@prisma/client";
 import { config } from "dotenv";
 config();
 
-import cors from "cors";
+import cors, { CorsOptions } from "cors";
 import { authRouter } from "./routers/authRouter";
 import { errorHandler } from "./utils/errorHandler";
 
@@ -21,11 +21,22 @@ declare module "express-session" {
   }
 }
 
-app.use(
-  cors({
-    credentials: true,
-  })
-);
+const whiteList = ["http://localhost:8000"];
+const corsOptions: CorsOptions = {
+  credentials: true,
+  origin: function (origin, callback) {
+    if (!origin) {
+      return callback(null, true);
+    }
+    if (whiteList.indexOf(origin) === -1) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by cors"));
+    }
+  },
+};
+
+app.use(cors(corsOptions));
 
 app.use(
   session({
