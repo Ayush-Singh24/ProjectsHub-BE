@@ -31,7 +31,7 @@ authRouter.post(
   }
 );
 
-authRouter.post(
+authRouter.get(
   "/logout",
   async (req: Request, res: Response, next: NextFunction) => {
     try {
