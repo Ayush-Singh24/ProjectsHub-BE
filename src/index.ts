@@ -9,6 +9,7 @@ config();
 import cors, { CorsOptions } from "cors";
 import { authRouter } from "./routers/authRouter";
 import { errorHandler } from "./utils/errorHandler";
+import { verifySession } from "./middlewares/verifySession";
 
 export const prisma = new PrismaClient();
 
@@ -56,11 +57,8 @@ app.use(json());
 app.use("/auth", authRouter);
 app.use(errorHandler);
 
-app.get("/", async (req: Request, res: Response) => {
-  if (req.session.username) {
-    return res.status(200).send({ username: req.session.username });
-  }
-  return res.status(401).send({ message: "not authorised" });
+app.get("/", verifySession, (req: Request, res: Response) => {
+  res.send({});
 });
 
 app.listen(PORT, () => {

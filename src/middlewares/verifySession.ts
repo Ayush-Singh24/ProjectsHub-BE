@@ -1,7 +1,7 @@
 import { prisma } from "..";
 import { Request, Response, NextFunction } from "express";
 
-export const verifySessoin = async (
+export const verifySession = async (
   req: Request,
   res: Response,
   next: NextFunction
