@@ -9,7 +9,7 @@ export const verifySessoin = async (
   try {
     const session = await prisma.session.findUnique({
       where: {
-        sid: req.session.username,
+        sid: req.session.id,
       },
     });
 
