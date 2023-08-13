@@ -22,14 +22,14 @@ declare module "express-session" {
   }
 }
 
-const whiteList = ["http://localhost:8000"];
-const corsOptions: CorsOptions = {
+const whitelist = ["http://localhost:3000", "http://localhost:8000"];
+const corsOptions: cors.CorsOptions = {
   credentials: true,
   origin: function (origin, callback) {
     if (!origin) {
       return callback(null, true);
     }
-    if (whiteList.indexOf(origin) === -1) {
+    if (whitelist.indexOf(origin) !== -1) {
       callback(null, true);
     } else {
       callback(new Error("Not allowed by cors"));
@@ -58,6 +58,7 @@ app.use("/auth", authRouter);
 app.use(errorHandler);
 
 app.get("/", verifySession, (req: Request, res: Response) => {
+  console.log("request made \n" + req);
   res.send({});
 });
 
